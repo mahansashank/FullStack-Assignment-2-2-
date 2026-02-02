@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Page-24bcy70103</title>
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f0f0f0;
+            padding: 15px;
+        }
+        h2 {
+            text-align: center;
+        }
+        .top {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        select {
+            padding: 6px;
+            margin: 5px;
+        }
+        .product-box {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        .product {
+            background-color: white;
+            border: 1px solid black;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+<h2>Mahan Product List</h2>
+<div class="top">
+    <select onchange="sortItems(this.value)">
+        <option value="">Sort Products</option>
+        <option value="priceLow">Price Low to High</option>
+        <option value="priceHigh">Price High to Low</option>
+        <option value="nameAZ">Name A to Z</option>
+        <option value="nameZA">Name Z to A</option>
+        <option value="ratingLow">Rating Low to High</option>
+        <option value="ratingHigh">Rating High to Low</option>
+    </select>
+    <select onchange="filterItems(this.value)">
+        <option value="all">All Categories</option>
+        <option value="Campus Life">Campus Life</option>
+        <option value="Desk Uses">Desk Uses</option>
+        <option value="Travel Things">Travel Things</option>
+        <option value="Gadets">Gadets</option>
+    </select>
+</div>
+<div class="product-box" id="productList"></div>
+<script>
+    var products = [
+        { name: "ID Card tag", price: 200, rating: 4, category: "Campus Life" },
+        { name: "Study Stool", price: 1300, rating: 5, category: "Campus Life" },
+        { name: "Study Pad", price: 150, rating: 3, category: "Campus Life" },
+        { name: "Exam File", price: 400, rating: 4, category: "Campus Life" },
+        { name: "Class Chart", price: 250, rating: 4, category: "Campus Life" },
+
+        { name: "Desk Mat", price: 700, rating: 5, category: "Desk Uses" },
+        { name: "Wire Clips", price: 300, rating: 4, category: "Desk Uses" },
+        { name: "Pen Stand", price: 600, rating: 3, category: "Desk Uses" },
+        { name: "Notes Board", price: 850, rating: 4, category: "Desk Uses" },
+        { name: "Foot Rest", price: 2000, rating: 5, category: "Desk Uses" },
+
+        { name: "Packing Cubes", price: 1800, rating: 5, category: "Travel Things" },
+        { name: "Neck Pillow", price: 1200, rating: 4, category: "Travel Things" },
+        { name: "Safe Wallet", price: 1500, rating: 4, category: "Travel Things" },
+        { name: "Shoe Bag", price: 500, rating: 3, category: "Travel Things" },
+        { name: "Rain Cover", price: 650, rating: 4, category: "Travel Things" },
+
+        { name: "USB Hub", price: 3000, rating: 5, category: "Gadets" },
+        { name: "extension wire", price: 220, rating: 4, category: "Gadets" },
+        { name: "Earbuds", price: 450, rating: 4, category: "Gadets" },
+        { name: "Charger", price: 2000, rating: 5, category: "Gadets" },
+        { name: "Calculator", price: 1700, rating: 4, category: "Gadets" }
+    ];
+    var currentItems = products;
+    function showProducts(list) {
+        var box = document.getElementById("productList");
+        box.innerHTML = "";
+
+        for (var i = 0; i < list.length; i++) {
+            box.innerHTML +=
+                "<div class='product'>" +
+                "<b>" + list[i].name + "</b><br>" +
+                "Price: ₹" + list[i].price + "<br>" +
+                "Rating: " + list[i].rating + "<br>" +
+                "Category: " + list[i].category +
+                "</div>";
+        }
+    }
+    function sortItems(type) {
+
+        if (type == "priceLow") {
+            currentItems.sort(function(a, b) {
+                return a.price - b.price;
+            });
+        }
+
+        if (type == "priceHigh") {
+            currentItems.sort(function(a, b) {
+                return b.price - a.price;
+            });
+        }
+
+        if (type == "nameAZ") {
+            currentItems.sort(function(a, b) {
+                return a.name.localeCompare(b.name);
+            });
+        }
+
+        if (type == "nameZA") {
+            currentItems.sort(function(a, b) {
+                return b.name.localeCompare(a.name);
+            });
+        }
+
+        if (type == "ratingLow") {
+            currentItems.sort(function(a, b) {
+                return a.rating - b.rating;
+            });
+        }
+
+        if (type == "ratingHigh") {
+            currentItems.sort(function(a, b) {
+                return b.rating - a.rating;
+            });
+        }
+
+        showProducts(currentItems);
+    }
+    function filterItems(cat) {
+
+        if (cat == "all") {
+            currentItems = products;
+        } else {
+            currentItems = products.filter(function(item) {
+                return item.category == cat;
+            });
+        }
+
+        showProducts(currentItems);
+    }
+    showProducts(currentItems);
+</script>
+</body>
+</html>
